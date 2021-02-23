@@ -10,17 +10,17 @@ This is a sample application for demonstrating how to protect app source code an
 ## Packaging a project
 #### Folder structure
 ```bash
-root dir
-├── app
-│   ├── core.py
+root project directory
+├── app                 <-- package folder
+│   ├── core.py         <-- python source code
 │   ├── main.py
-│   └── __init__.py
+│   └── __init__.py     <-- package mandatory file
 ├── example2.py
-└── setup.py
+└── setup.py 
 ```
 
-Folder of an package must contain  \_\_init__.py file. This file can be blanked in simple project. But for a Cython packaging, this file must contain exported modules. <br/>
-File setup.py is directive to build your package. A simple setup file:
+Folder of an package must contain  **\_\_init__.py** file. This file can be blanked in simple project. But for a Cython packaging, this file must contain exported modules. <br/>
+File **setup.py** is directive to build your package. A simple setup file:
 ```python
 # coding: utf-8
 import os
