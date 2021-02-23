@@ -1,0 +1,3 @@
+
+def greeting():
+    print("--> Greeting")
