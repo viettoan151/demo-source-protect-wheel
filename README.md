@@ -3,6 +3,7 @@
 This is a sample application for demonstrating how to protect app source code and distribute package. All magic is in the ``setup.py`` file.
 
 ## Reference examples
+[Python Guideline](https://packaging.python.org/tutorials/packaging-projects/) <br/>
 [Simple to complicated](https://medium.com/swlh/distributing-python-packages-protected-with-cython-40fc29d84caf) <br/>
 [Advance in Cython](https://bucharjan.cz/blog/using-cython-to-protect-a-python-codebase.html)
 
@@ -12,11 +13,12 @@ This is a sample application for demonstrating how to protect app source code an
 ```bash
 root project directory
 ├── app                 <-- package folder
+│   ├── includes        <-- wheel include folder (will be copied to wheel)
 │   ├── core.py         <-- python source code
-│   ├── main.py
+│   ├── main.py         <-- python source code
 │   └── __init__.py     <-- package mandatory file
-├── example2.py
-└── setup.py 
+├── example2.py         <-- example test module script
+└── setup.py            <-- module setup script
 ```
 
 Folder of an package must contain  **\_\_init__.py** file. This file can be blanked in simple project. But for a Cython packaging, this file must contain exported modules. <br/>
