@@ -110,8 +110,13 @@ class MyBuildExt(build_ext):
         
         target_dir = build_dir if not self.inplace else root_dir
         
-        self.copy_file(Path('app') / '__init__.py', root_dir, target_dir)
-    
+        # TODO: Manually copy all your module __init__.py here
+        self.copy_file(Path(NAME_APP) / '__init__.py', root_dir, target_dir)
+        # TODO: When you have submodule __init__.py, please do copy them also
+        # self.copy_file(Path(NAME_APP) / 'submodule' / '__init__.py', root_dir, target_dir)
+        # or
+        # self.copy_file(Path('submodule') / '__init__.py', root_dir, target_dir)
+        
     @classmethod
     def copy_file(cls, path, source_dir, destination_dir):
         """
