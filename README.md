@@ -1,6 +1,6 @@
 # Distributing python packages protected with Cython
 
-This is a sample application for demonstrating how to protect app source code and distribute package. All magic is in the ``setup.py`` file.
+This is a sample application for demonstrating how to protect an app source code and distribute package. All magic is in the ``setup.py`` file.
 
 ## Reference examples
 [Python Guideline](https://packaging.python.org/tutorials/packaging-projects/) <br/>
@@ -8,8 +8,15 @@ This is a sample application for demonstrating how to protect app source code an
 [Advance in Cython](https://bucharjan.cz/blog/using-cython-to-protect-a-python-codebase.html)
 
 
-## Packaging a project
+## Packaging python code
+Packaging is grouping python modules of a task into as blackbox.<br/>
+Your package will be able to:
+* install with *pip*.
+* specify as a dependency for another package.
+* add and distribute with documentation.
+
 #### Folder structure
+A project that has **app** package will look like: 
 ```bash
 root project directory
 ├── app                 <-- package folder
@@ -20,21 +27,22 @@ root project directory
 ├── example2.py         <-- example test module script
 └── setup.py            <-- module setup script
 ```
-
-Folder of an package must contain  **\_\_init__.py** file. This file can be blanked in simple project. But for a Cython packaging, this file must contain exported modules. <br/>
-File **setup.py** is directive to build your package. A simple setup file:
-```python
-# coding: utf-8
-import os
-
-from setuptools import setup, find_packages
-
-setup(
-    name='app',
-    version='0.1.0',
-    packages=find_packages()
-)
-```
+Mandatory files:
+* **\_\_init__.py**: Folder of an package must contain  **\_\_init__.py** file. This file can be blanked in simple project. But for a Cython packaging, you have to export your package modules there. <br/>
+* **setup.py**: File **setup.py** is directive to build your package. An simple setup file is ...
+    ```python
+    # coding: utf-8
+    import os
+    
+    from setuptools import setup, find_packages
+    
+    setup(
+        name='app',
+        version='0.1.0',
+        packages=find_packages()
+    )
+    ```
+You also can see another example of structure in [link](https://python-packaging.readthedocs.io/en/latest/minimal.html).
 
 #### Set up environment
 ```
