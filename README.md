@@ -26,6 +26,7 @@ root project directory
 │   └── __init__.py     <-- package mandatory file
 ├── example2.py         <-- example test module script
 └── setup.py            <-- module setup script
+└── setup_cython.py     <-- Run it, instead of above script, to setup with Cython
 ```
 Mandatory files:
 * **\_\_init__.py**: Folder of an package must contain  **\_\_init__.py** file. This file can be blanked in simple project. But for a Cython packaging, you have to export your package modules there. <br/>
@@ -48,22 +49,32 @@ You also can see another example of structure in [link](https://python-packaging
 ```
 $ virtualenv .venv --python=python3.6
 $ source .venv/bin/activate
-$ pip install Cython
+$ pip3 install Cython
 ``` 
 
 
 #### Build package
-
+In simple, you just run *setup.py* script to generate wheel files.
 ```
 $ rm -rf app.egg-info dist build
-$ python setup.py bdist_wheel
+$ python3 setup.py bdist_wheel
 ```
-
+But above wheel does not help to hide your python code. <br/>
+Let's try the next, *setup_cython.py*:
+```
+$ rm -rf app.egg-info dist build
+$ python3 setup_cython.py bdist_wheel
+```
+OK, you already hide your code. Go next step to verify it!
 
 #### Verify package
-In unzip folder, there is no python source code
+Unzip your wheel:
 ```
 $ unzip dist/app-0.1.0-cp36-cp36m-linux_x86_64.whl -d dist/app
+```
+
+In unzip folder, verify there is no python source code
+```
 $ tree dist/app
 dist/app
 ├── app
@@ -77,11 +88,12 @@ dist/app
     ├── top_level.txt
     └── WHEEL
 ```
-Run example
+
+And try to run example:
 ```
 $ cp example2.py dist/app
 $ cd dist/app
-$ python -m example2
+$ python3 -m example2
 
 Hello from __init__
 Test greeting
