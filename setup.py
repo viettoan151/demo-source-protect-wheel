@@ -22,6 +22,11 @@ setuptools.setup(
         "License :: OSI Approved :: MIT License",
         "Operating System :: OS Independent",
     ],
+    
+    # data_files=[('includes', ['app/includes/example.bin', 'app/includes/example.py'])],
+    package_data={
+        NAME_APP: ['includes/example.bin', 'includes/example.py'],
+    },
 )
 
 

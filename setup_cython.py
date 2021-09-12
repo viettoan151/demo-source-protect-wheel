@@ -34,14 +34,15 @@ if sys.platform == 'win32':
     # inform setuptools that the env is already set
     os.environ['DISTUTILS_USE_SDK'] = '1'
 
+
+# The module folder, your application will be named as its also
+NAME_APP = 'app'
+
 # Exclude file, when you don't want to compile these files
 # Must use OS independent path name
 EXCLUDE_FILES = [
     # os.path.join('app','main.py'),
 ]
-
-# The module folder, your application will be named as its also
-NAME_APP = 'app'
 
 
 # noinspection PyPep8Naming
@@ -55,8 +56,14 @@ class build_py(_build_py):
                 continue
             filtered_modules.append((pkg, mod, filepath,))
         return filtered_modules
-
-
+    
+    def build_packages(self):
+        """
+        https://stackoverflow.com/a/56043918
+        """
+        pass
+    
+    
 def get_ext_paths(root_dir, exclude_files):
     """
     Get path of all .py files for compilation
@@ -116,6 +123,9 @@ class MyBuildExt(build_ext):
         # self.copy_file(Path(NAME_APP) / 'submodule' / '__init__.py', root_dir, target_dir)
         # or
         # self.copy_file(Path('submodule') / '__init__.py', root_dir, target_dir)
+        # TODO: Copy include files
+        # for f in EXCLUDE_FILES:
+        #     self.copy_file(Path(f), Path('.'), target_dir)
         
     @classmethod
     def copy_file(cls, path, source_dir, destination_dir):
@@ -134,8 +144,7 @@ class MyBuildExt(build_ext):
 setup(
     name=NAME_APP,
     version='0.1.0',
-    # packages=find_packages(),
-    packages=[],
+    packages=find_packages(),
     ext_modules=cythonize(
         get_ext_paths(NAME_APP, EXCLUDE_FILES),
         build_dir="build",
@@ -143,11 +152,20 @@ setup(
                              'always_allow_keywords': True,
                              }
     ),
-    include_dir=[NAME_APP, os.path.join(NAME_APP, 'includes')],
+    # data_files=[('includes', ['app/includes/example.bin', 'app/includes/example.py'])],
+    package_data={
+        NAME_APP: ['includes/example.bin', 'includes/example.py'],
+    },
+    
     cmdclass={
         'build_py': build_py,
         'build_ext': MyBuildExt,
     },
+    entry_points={
+    'console_scripts': [
+        'app = app.main:main',
+    ],
+},
 )
 
 # build command

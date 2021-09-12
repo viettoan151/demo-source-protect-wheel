@@ -1,8 +1,8 @@
 import app
 
 if __name__ == '__main__':
-    print('Test greeting')
+    print('Test 0: greeting function')
     app.greeting()
-    print('Test hello')
+    print('Test 1: hello2 functiond')
     app.hello2()
-    print('Success!')
+    print('Test done')
