@@ -1,26 +1,24 @@
-# Distributing python packages protected with Cython
+# Distribute python packages and protect them with Cython
 
-This is a sample application for demonstrating how to protect an app source code and distribute package. All magic is in the ``setup.py`` file.
-
-## Reference examples
-[Python Guideline](https://packaging.python.org/tutorials/packaging-projects/) <br/>
-[Simple to complicated](https://medium.com/swlh/distributing-python-packages-protected-with-cython-40fc29d84caf) <br/>
-[Advance in Cython](https://bucharjan.cz/blog/using-cython-to-protect-a-python-codebase.html)
-
+This is a example application for demonstrating how to protect python source code and distribute package.<br/> 
+(If you want to see my reference, please jump to last section. I will not explain **why** questions in this Readme.)
 
 ## Packaging python code
-Packaging is grouping python modules of a task into as blackbox.<br/>
+Packaging is grouping python codes of a task into a module as blackbox.<br/>
 Your package will be able to:
 * install with *pip*.
 * specify as a dependency for another package.
 * add and distribute with documentation.
+
+In advance with **Cython**, your python code will be compiled to object files (.dll in Windows, .so in Linux). <br/>
+And it's difficult to reverse your released.
 
 #### Folder structure
 A project that has **app** package will look like: 
 ```bash
 root project directory
 ├── app                 <-- package folder
-│   ├── includes        <-- wheel include folder (will be copied to wheel)
+│   ├── includes        <-- wheel include folder (an example folder that you want to )
 │   ├── core.py         <-- python source code
 │   ├── main.py         <-- python source code
 │   └── __init__.py     <-- package mandatory file
@@ -28,7 +26,7 @@ root project directory
 └── setup.py            <-- module setup script
 └── setup_cython.py     <-- Run it, instead of above script, to setup with Cython
 ```
-Mandatory files:
+##### Mandatory files:
 * **\_\_init__.py**: Folder of an package must contain  **\_\_init__.py** file. This file can be blanked in simple project. But for a Cython packaging, you have to export your package modules there. <br/>
 * **setup.py**: File **setup.py** is directive to build your package. An simple setup file is ...
     ```python
@@ -43,7 +41,13 @@ Mandatory files:
         packages=find_packages()
     )
     ```
-You also can see another example of structure in [link](https://python-packaging.readthedocs.io/en/latest/minimal.html).
+    You also can see another example of structure in [link](https://python-packaging.readthedocs.io/en/latest/minimal.html).<br/>
+
+##### Advance:
+* **setup_cython.py**: this file will be used, instead of **setup.py**, when you need to hide your python code.<br/>
+    It contains overrided functions of Cython utilities.<br/>
+    This file is required to be modified, to adapt with each your application.
+    (*Please read this file carefully before use for other application*)
 
 #### Set up environment
 ```
@@ -51,7 +55,6 @@ $ virtualenv .venv --python=python3.6
 $ source .venv/bin/activate
 $ pip3 install Cython
 ``` 
-
 
 #### Build package
 In simple, you just run *setup.py* script to generate wheel files.
@@ -102,3 +105,10 @@ Test hello
 --> Hello world2
 Success!
 ```
+
+
+## Referenced examples
+[Python Guideline](https://packaging.python.org/tutorials/packaging-projects/) <br/>
+[Simple to complicated](https://medium.com/swlh/distributing-python-packages-protected-with-cython-40fc29d84caf) <br/>
+[Advance in Cython](https://bucharjan.cz/blog/using-cython-to-protect-a-python-codebase.html)
+
